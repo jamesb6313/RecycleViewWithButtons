@@ -1,4 +1,4 @@
-package com.rv_withbuttons;
+package com.titansArchery;
 
 //Base of shoot n scoot project taken from url below
 //See: https://demonuts.com/recyclerview-button/
@@ -20,9 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public static ArrayList<Model> modelArrayList;
+    public static int NumberOfTargets = 24;
     private CustomAdapter customAdapter;
     private Button btnnext;
-    private String[] fruitlist = new String[]{"Apples", "Oranges", "Potatoes", "Tomatoes", "Grapes"};
+    //private String[] fruitlist = new String[]{"Apples", "Oranges", "Potatoes", "Tomatoes", "Grapes"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Model> list = new ArrayList<>();
 
         //int numHoles = R.integer.num_holes;
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < NumberOfTargets; i++){
 
             Model model = new Model();
-            model.setNumber(1);
-            model.setFruit(fruitlist[i]);
+            model.setTargetScore(0);
+            model.setTargetName("Target Number " + (i + 1));
+            //model.setElapsedTime("-1");
             list.add(model);
         }
         return list;
