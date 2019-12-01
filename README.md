@@ -1,4 +1,4 @@
-# TinasArcheryShootnScoot
+# Titans Archery's Shoot'n Scoot
 Base of ShootnScoot Project - See https://demonuts.com/recyclerview-button
 
 ### Android Studio v3.5.2 (target phones Android API 28 and up; tested on emulator Pixel 2 API 28)
