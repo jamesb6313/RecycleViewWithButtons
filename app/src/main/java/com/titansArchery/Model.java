@@ -4,6 +4,7 @@ public class Model {
 
     private int targetScore;
     private String targetName;
+    private String elapsedTime;
 
     public int getTargetScore() {
         return targetScore;
@@ -20,4 +21,9 @@ public class Model {
     public void setTargetName(String targetName) {
         this.targetName = targetName;
     }
+
+    public String getElapsedTime() { return elapsedTime; }
+
+    public void setElapsedTime(String elapsedTime) { this.elapsedTime = elapsedTime; }
+
 }

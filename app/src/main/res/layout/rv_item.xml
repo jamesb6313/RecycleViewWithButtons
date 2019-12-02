@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -8,69 +9,74 @@
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp" >
+        android:layout_gravity="center">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
             android:background="#fadcdc"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/targetNumber"
+                android:layout_width="94dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:lines="2"
+                android:text="@string/targetNumber"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#000"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/targetScore"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="@string/initialScore"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000"
+                android:textSize="18sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/targetNumber"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/targetNumber"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000"
-                    android:textSize="20sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/targetScore"
-                    android:layout_marginLeft="20dp"
-                    android:text="1"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/plus"
-                    android:layout_marginLeft="20dp"
-                    android:text="Plus"
-                    android:textColor="#000"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:enabled="false"
+                    android:text="@string/btn_plus"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
 
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/minus"
-                    android:text="Minus"
-                    android:textColor="#000" />
-
-
-
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="5dp"
+                    android:enabled="false"
+                    android:text="@string/btn_minus"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textColor="#000"
+                    android:textSize="12sp" />
 
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/targetElapsedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/targetInitialTime"
+                android:textColor="#e41d1d"/>
 
         </LinearLayout>
 

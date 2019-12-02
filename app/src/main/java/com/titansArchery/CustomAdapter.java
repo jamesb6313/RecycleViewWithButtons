@@ -1,12 +1,14 @@
 package com.titansArchery;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,10 +33,21 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final CustomAdapter.MyViewHolder holder, int position) {
+        boolean red = true;
 
         holder.tvTargetName.setText(MainActivity.modelArrayList.get(position).getTargetName());
         holder.tvTargetScore.setText(String.valueOf(MainActivity.modelArrayList.get(position).getTargetScore()));
 
+
+        holder.tvElapsedTime.setText(MainActivity.modelArrayList.get(position).getElapsedTime());
+        if (!MainActivity.modelArrayList.get(position).getElapsedTime().equals("-1")) {
+            red = false;
+        }
+        if (!red) {
+            holder.tvElapsedTime.setTextColor(Color.GREEN);
+        }
+        holder.btn_minus.setEnabled(false);
+        holder.btn_plus.setEnabled(false);
     }
 
     @Override
@@ -45,7 +58,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         protected Button btn_plus, btn_minus;
-        private TextView tvTargetName, tvTargetScore;
+        private TextView tvTargetName, tvTargetScore, tvElapsedTime;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +76,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             btn_plus.setOnClickListener(this);
             btn_minus.setOnClickListener(this);
 
+            tvElapsedTime = (TextView) itemView.findViewById(R.id.targetElapsedTime);
         }
 
         //onClick Listener for view
@@ -89,15 +103,19 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             }   //Enable_Disable Target Score Row
             else {
 
+                //Select Row to Enable Plus, Minus Buttons
                 int position = getAdapterPosition();
-                TextView fruitName = (TextView) v.findViewById(R.id.targetNumber);  //name of target
 
-                Log.i("MyINFO","the item position that was clicked is " + position);
-                Log.i("MyINFO","fruit: (TextView) var fruitName.getText() " + fruitName.getText());
+                Button btnPlus = v.findViewById(R.id.plus);
+                Button btnMinus = v.findViewById(R.id.minus);
 
-                String fname = MainActivity.modelArrayList.get(getAdapterPosition()).getTargetName();
-                Log.i("MyINFO","fruit: model.getFruit " + fname);
+                btnMinus.setEnabled(true);
+                btnPlus.setEnabled(true);
+                String curTarget = MainActivity.modelArrayList.get(position).getTargetName();
+                Log.i("MyINFO","TargetName =  " + curTarget);
+                Toast.makeText(ctx, "Current Target =  " + curTarget, Toast.LENGTH_SHORT).show();
 
+                //
             }
         }
     }

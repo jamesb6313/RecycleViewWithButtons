@@ -7,5 +7,10 @@
     <string name="saveScoreCard">Save Score Card</string>
     <string name="shareScoreCard">Share Score Card</string>
     <string name="showScoreCard">Show Score Card</string>
-    <string name="targetNumber">TargetNumber</string>
+    <string name="targetNumber">Target Number</string>
+    <string name="courseTimer">Course Timer</string>
+    <string name="initialScore">0</string>
+    <string name="btn_plus">Plus</string>
+    <string name="btn_minus">Minus</string>
+    <string name="targetInitialTime">00:00:00</string>
 </resources>

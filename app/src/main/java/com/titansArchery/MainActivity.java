@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             Model model = new Model();
             model.setTargetScore(0);
             model.setTargetName("Target Number " + (i + 1));
-            //model.setElapsedTime("-1");
+            model.setElapsedTime("-1");
             list.add(model);
         }
         return list;
