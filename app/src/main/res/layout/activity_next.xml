@@ -6,9 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".NextActivity">
 
+    <Button
+        android:id="@+id/btn_share"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:text="@string/shareSheet" />
+
     <WebView
         android:id="@+id/wv_ScoreSheet"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_share">
+
+    </WebView>
 
 </RelativeLayout>

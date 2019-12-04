@@ -2,15 +2,13 @@
     <string name="app_name">Titan\'s Scoot \'n Shoot</string>
     <string name="action_settings">Settings</string>
     <string name="timerVal">00:00</string>
-    <string name="pauseButtonLabel">Stop</string>
-    <string name="startButtonLabel">Start</string>
-    <string name="saveScoreCard">Save Score Card</string>
-    <string name="shareScoreCard">Share Score Card</string>
-    <string name="showScoreCard">Show Score Card</string>
+    <string name="shareSheet">Share Score Sheet</string>
     <string name="targetNumber">Target Number</string>
     <string name="courseTimer">Course Timer</string>
     <string name="initialScore">0</string>
     <string name="btn_plus">Plus</string>
     <string name="btn_minus">Minus</string>
-    <string name="targetInitialTime">00:00:00</string>
+    <string name="btn_start">Start</string>
+    <string name="btn_stop">Stop</string>
+    <string name="nextActivity">Show Score Sheet</string>
 </resources>

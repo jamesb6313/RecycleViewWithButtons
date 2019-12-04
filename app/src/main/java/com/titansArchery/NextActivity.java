@@ -2,25 +2,45 @@ package com.titansArchery;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.TextView;
+import android.widget.Button;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 
 public class NextActivity extends AppCompatActivity {
 
-    //private TextView tvScoreSheet;
-    private WebView wv_ScoreSheet;
-    private String html, path, fn;
-    private int scoreSheetLoop = 12;
+
+    WebView wv_ScoreSheet;
+    Button btn_share;
+    String html;
+    int scoreSheetLoop = 12;
+
+    private String fn, scoreSheetHTML;
+    private static final int CREATE_REQUEST_CODE = 40;
+    //private static final int OPEN_REQUEST_CODE = 41;
+    //private static final int SAVE_REQUEST_CODE = 42;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_next);
 
-        wv_ScoreSheet = (WebView) findViewById(R.id.wv_ScoreSheet);
-        int targetCount = MainActivity.modelArrayList.size();   //NumberOfTargets = 24
+        wv_ScoreSheet = findViewById(R.id.wv_ScoreSheet);
+        btn_share = findViewById(R.id.btn_share);
+
+
+        //int targetCount = MainActivity.modelArrayList.size();   //NumberOfTargets = 24
 
         int totalShots = 0;
         final StringBuilder sb_HTML = new StringBuilder();
@@ -67,7 +87,6 @@ public class NextActivity extends AppCompatActivity {
                 }
             }
 
-
             //First three columns of the score sheet row
             tempStr = "<td>" + tNum1 + "</td>";
             sb_HTML.append(tempStr);
@@ -100,7 +119,7 @@ public class NextActivity extends AppCompatActivity {
             int tt = Integer.parseInt(totalMinutes);
             totalMinutes = Integer.toString(tt);
         } catch (Exception e) {
-            Log.e("MyInfo", "onCreate() ERROE msg: " + e.getMessage() + ", time2 = " + totalTime);
+            Log.e("MyINFO", "onCreate() ERROR msg: " + e.getMessage() + ", time2 = " + totalTime);
         }*/
 
         sb_HTML.append(totalMinutes);
@@ -110,7 +129,7 @@ public class NextActivity extends AppCompatActivity {
         }
         catch(NumberFormatException nfe) {
             // Handle parse error.
-            Log.e("MyINFO", "onCreater() score sheet processing Error msg " + nfe.getMessage());
+            Log.e("MyINFO", "onCreate() score sheet processing Error msg " + nfe.getMessage());
         }
 
         int tScore = mins + totalShots;
@@ -120,5 +139,62 @@ public class NextActivity extends AppCompatActivity {
         html = sb_HTML.toString();
 
         wv_ScoreSheet.loadData(html , "text/html; charset=UTF-8", null);
+        scoreSheetHTML = html;
+
+        btn_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intentShareFile = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                intentShareFile.addCategory(Intent.CATEGORY_OPENABLE);
+                intentShareFile.setType("text/html; charset=UTF-8");
+
+                String timeStr = DateFormat.format("dd_MM_yyyy_hh_mm_ss", System.currentTimeMillis()).toString();
+                fn = "TitanScoreCard_" + timeStr + ".html";
+
+                intentShareFile.putExtra(Intent.EXTRA_TITLE, fn);
+                startActivityForResult(intentShareFile, CREATE_REQUEST_CODE);
+            }
+        });
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
+        super.onActivityResult(requestCode,resultCode,resultData);
+
+        Uri currentUri;
+
+        if (resultCode == Activity.RESULT_OK)
+        {
+
+            if (requestCode == CREATE_REQUEST_CODE)
+            {
+                if (resultData != null) {
+                    currentUri = resultData.getData();
+                    writeFileContent(currentUri);
+                }
+            }
+        }
+    }
+
+    private void writeFileContent(Uri uri)
+    {
+        try {
+            ParcelFileDescriptor pfd = this.getContentResolver().openFileDescriptor(uri, "w");
+            FileOutputStream outFile = new FileOutputStream(pfd.getFileDescriptor());
+
+            scoreSheetHTML = "<h2>" + fn + "</h2></br>" + scoreSheetHTML;
+            outFile.write(scoreSheetHTML.getBytes());
+            outFile.close();
+            pfd.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Log.e("Share", "shareHtmlFile() FILE NOT FOUND ERROR " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Share", "shareHtmlFile() IO ERROR " + e.getMessage());
+        }
+    }
+
 }
