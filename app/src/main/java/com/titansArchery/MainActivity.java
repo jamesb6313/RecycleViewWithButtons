@@ -16,6 +16,7 @@ https://github.com/jamesb6313/TitansShootnScoot.git
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
+//import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MyInfo";
     public static boolean startRound = false;
 
-    SharedPreferences mpref;
+    SharedPreferences mPref;
     SharedPreferences.Editor mEditor;
 
     //GSON
@@ -91,8 +92,9 @@ public class MainActivity extends AppCompatActivity {
         });
         //TODO - end
 
-        mpref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        mEditor = mpref.edit();
+        mPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        mEditor = mPref.edit();
+
         //GSON all the gson code - fixed
         gson = new Gson();
 
@@ -101,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
         pauseButton = findViewById(R.id.btn_stop);
 
         try {
-            Long l_value = mpref.getLong("data2", 0);
+            Long l_value = mPref.getLong("data2", 0);
             startTimeInMillis = l_value;
             modelArrayList = getModel();
 
-            Log.i(TAG , "init: mpref str_value = " + l_value);
+            Log.i(TAG , "init: mPref str_value = " + l_value);
             if (l_value == 0) {
                 startButton.setEnabled(true);
                 CustomAdapter customAdapter = new CustomAdapter(this);
@@ -116,11 +118,11 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 startButton.setEnabled(false);
-                String str_value = mpref.getString("data1", "");
+                String str_value = mPref.getString("data1", "");
                 setTitle("Titan's ScootnShoot: " + str_value);
 
                 modelArrayList.clear();
-                String json = mpref.getString("data3", "");
+                String json = mPref.getString("data3", "");
 
                 //GSON all the gson code - fixed
                 Type type = new TypeToken<ArrayList<Model>>() {}.getType();
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
                                     mEditor.clear().commit();
                                     Log.i(TAG,"stopButton.onClickListener() Editor Cleared");
                                     startRound = false; //todo maybe endRound or leave true
-
+                                    pauseButton.setEnabled(false);
                                     dialog.cancel();
                                 }
                             });
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
-            String str_value = mpref.getString("data1", "");
+            String str_value = mPref.getString("data1", "");
             setTitle("Titan's ScootnShoot: " + str_value);
 
             String json = gson.toJson(modelArrayList);
@@ -255,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         try {
-            String str_value = mpref.getString("data1", "");
+            String str_value = mPref.getString("data1", "");
             setTitle("Titan's ScootnShoot: " + str_value);
 
             String json = gson.toJson(modelArrayList);
@@ -276,10 +278,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         try {
-            Long l_value = mpref.getLong("data2", 0);
+            Long l_value = mPref.getLong("data2", 0);
 
             startTimeInMillis = l_value;
-            Log.i(TAG , "onResume() mpref l_value = " + l_value.toString());
+            Log.i(TAG , "onResume() mPref l_value = " + l_value.toString());
             if (l_value != 0) {
                 customHandler.removeCallbacks(updateTimerThread);
                 customHandler.postDelayed(updateTimerThread, 1000); // delay 1 second
@@ -297,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
             Model model = new Model();
             model.setTargetScore(0);
-            model.setTargetName("Target " + (i + 1));
+            model.setTargetName(String.valueOf(i + 1));
             model.setElapsedTime("-1");
             list.add(model);
         }

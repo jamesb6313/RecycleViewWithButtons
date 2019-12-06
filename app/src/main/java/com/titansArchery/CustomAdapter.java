@@ -35,19 +35,26 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(final CustomAdapter.MyViewHolder holder, int position) {
-        boolean red = true;
+//        boolean red = true;
 
         holder.tvTargetName.setText(MainActivity.modelArrayList.get(position).getTargetName());
         holder.tvTargetScore.setText(String.valueOf(MainActivity.modelArrayList.get(position).getTargetScore()));
 
+        String modelTimeValue =  MainActivity.modelArrayList.get(position).getElapsedTime();
+        holder.tvElapsedTime.setText(modelTimeValue);
 
-        holder.tvElapsedTime.setText(MainActivity.modelArrayList.get(position).getElapsedTime());
-        if (!MainActivity.modelArrayList.get(position).getElapsedTime().equals("-1"))
-            red = false;
-        if (!red)
+        if (modelTimeValue.equals("-1")) {
+            holder.tvElapsedTime.setTextColor(Color.RED);
+        } else {
             holder.tvElapsedTime.setTextColor(Color.GREEN);
+        }
+//            red = false;
+//        if (!red)
+//            holder.tvElapsedTime.setTextColor(Color.GREEN);
         holder.btn_minus.setEnabled(false);
         holder.btn_plus.setEnabled(false);
+        holder.btn_minus.setTextColor(Color.RED);
+        holder.btn_plus.setTextColor(Color.RED);
         //holder.btn_minus.setClickable(false);
         //holder.btn_plus.setClickable(false);
     }
@@ -72,8 +79,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             tvTargetScore = itemView.findViewById(R.id.targetScore);
             btn_plus = itemView.findViewById(R.id.plus);
             btn_minus = itemView.findViewById(R.id.minus);
-            btn_minus.setEnabled(false);
-            btn_plus.setEnabled(false);
+//            btn_minus.setEnabled(false);
+//            btn_plus.setEnabled(false);
+//            btn_minus.setTextColor(Color.RED);
+//            btn_plus.setTextColor(Color.RED);
 
 
             btn_plus.setTag(R.integer.btn_plus_view, itemView);
@@ -88,6 +97,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         @Override
         public void onClick(View v) {
             if (MainActivity.startRound) {
+
                 //Add to Score
                 if (v.getId() == btn_plus.getId()) {
 
@@ -102,7 +112,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                     if (tv_time.getText().toString().equals("-1")) {
                         android.util.Log.i("time2: ", MainActivity.timerValue.getText().toString());
-                        //TextView tv_curTime = tempview.findViewById(R.id.timerValue);
                         String curTime = MainActivity.timerValue.getText().toString();
                         android.util.Log.i("curTime: ", curTime);
 
@@ -134,6 +143,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                     btn_minus.setEnabled(true);
                     btn_plus.setEnabled(true);
+                    btn_minus.setTextColor(Color.BLACK);
+                    btn_plus.setTextColor(Color.BLACK);
+
                     //btn_minus.setClickable(true);
                     //btn_plus.setClickable(true);
 
