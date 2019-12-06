@@ -111,16 +111,16 @@ public class NextActivity extends AppCompatActivity {
         sb_HTML.append(totalShots);
         sb_HTML.append(", Minutes = ");
 
-        //String totalTime = MainActivity.timerValue.getText().toString();
+        String totalTime = MainActivity.timerValue.getText().toString();
         String totalMinutes = "0";
-/*        try {
+        try {
             int colonPos = totalTime.indexOf(':');
             totalMinutes = totalTime.substring(0, colonPos);
             int tt = Integer.parseInt(totalMinutes);
             totalMinutes = Integer.toString(tt);
         } catch (Exception e) {
             Log.e("MyINFO", "onCreate() ERROR msg: " + e.getMessage() + ", time2 = " + totalTime);
-        }*/
+        }
 
         sb_HTML.append(totalMinutes);
         int mins = 0;

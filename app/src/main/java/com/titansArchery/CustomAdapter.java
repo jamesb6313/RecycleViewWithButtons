@@ -48,6 +48,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             holder.tvElapsedTime.setTextColor(Color.GREEN);
         holder.btn_minus.setEnabled(false);
         holder.btn_plus.setEnabled(false);
+        //holder.btn_minus.setClickable(false);
+        //holder.btn_plus.setClickable(false);
     }
 
     @Override
@@ -70,6 +72,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             tvTargetScore = itemView.findViewById(R.id.targetScore);
             btn_plus = itemView.findViewById(R.id.plus);
             btn_minus = itemView.findViewById(R.id.minus);
+            btn_minus.setEnabled(false);
+            btn_plus.setEnabled(false);
+
 
             btn_plus.setTag(R.integer.btn_plus_view, itemView);
             btn_minus.setTag(R.integer.btn_minus_view, itemView);
@@ -129,6 +134,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
                     btn_minus.setEnabled(true);
                     btn_plus.setEnabled(true);
+                    //btn_minus.setClickable(true);
+                    //btn_plus.setClickable(true);
+
                     String curTarget = MainActivity.modelArrayList.get(position).getTargetName();
                     Log.i("MyINFO", "TargetName =  " + curTarget);
                     Toast.makeText(ctx, "Current Target =  " + curTarget, Toast.LENGTH_SHORT).show();
